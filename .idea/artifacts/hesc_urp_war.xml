@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="hesc-urp:war">
+    <output-path>$PROJECT_DIR$/cas/target</output-path>
+    <root id="archive" name="hesc-urp-0.0.1-SNAPSHOT.war">
+      <element id="artifact" artifact-name="hesc-urp:war exploded" />
+    </root>
+  </artifact>
+</component>

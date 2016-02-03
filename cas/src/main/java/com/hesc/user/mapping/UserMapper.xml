@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hesc.user.dao.UserDao" >
+    <resultMap id="BaseResultMap" type="com.hesc.user.pojo.User" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
+        <result column="group_id" property="groupId" jdbcType="VARCHAR" />
+        <result column="sort" property="sort" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+        <result column="state" property="state" jdbcType="VARCHAR" />
+        <result column="role_id" property="roleId" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        id, name, phone, group_id, sort, create_time, state, role_id
+    </sql>
+
+    <insert id="insert" parameterType="com.hesc.user.pojo.User" >
+        insert into user (id, name, phone, 
+            group_id, sort, create_time, 
+            state, role_id)
+        values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+            #{groupId,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR}, #{createTime,jdbcType=BIGINT}, 
+            #{state,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR})
+    </insert>
+
+    <delete id="deleteById" parameterType="java.lang.String" >
+        delete from user
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+
+    <delete id="delete" parameterType="com.hesc.user.pojo.User" >
+        delete from user
+        <trim prefix="where" prefixOverrides="and|or" >
+            <if test="name != null" >
+                 and name = #{name,jdbcType=VARCHAR}
+            </if>
+            <if test="phone != null" >
+                 and phone = #{phone,jdbcType=VARCHAR}
+            </if>
+            <if test="groupId != null" >
+                 and group_id = #{groupId,jdbcType=VARCHAR}
+            </if>
+            <if test="sort != null" >
+                 and sort = #{sort,jdbcType=VARCHAR}
+            </if>
+            <if test="createTime != null" >
+                 and create_time = #{createTime,jdbcType=BIGINT}
+            </if>
+            <if test="state != null" >
+                 and state = #{state,jdbcType=VARCHAR}
+            </if>
+            <if test="roleId != null" >
+                 and role_id = #{roleId,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </delete>
+
+    <update id="update" parameterType="com.hesc.user.pojo.User" >
+        update user
+        <set >
+            <if test="name != null" >
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null" >
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="groupId != null" >
+                group_id = #{groupId,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null" >
+                sort = #{sort,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null" >
+                create_time = #{createTime,jdbcType=BIGINT},
+            </if>
+            <if test="state != null" >
+                state = #{state,jdbcType=VARCHAR},
+            </if>
+            <if test="roleId != null" >
+                role_id = #{roleId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from user
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectCount" parameterType="com.hesc.user.pojo.User" resultType="java.lang.Long" >
+        select count(*) from user
+        <trim prefix="where" prefixOverrides="and|or" >
+            <if test="name != null" >
+                 and name = #{name,jdbcType=VARCHAR}
+            </if>
+            <if test="phone != null" >
+                 and phone = #{phone,jdbcType=VARCHAR}
+            </if>
+            <if test="groupId != null" >
+                 and group_id = #{groupId,jdbcType=VARCHAR}
+            </if>
+            <if test="sort != null" >
+                 and sort = #{sort,jdbcType=VARCHAR}
+            </if>
+            <if test="createTime != null" >
+                 and create_time = #{createTime,jdbcType=BIGINT}
+            </if>
+            <if test="state != null" >
+                 and state = #{state,jdbcType=VARCHAR}
+            </if>
+            <if test="roleId != null" >
+                 and role_id = #{roleId,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </select>
+
+    <select id="selectList" parameterType="com.hesc.user.pojo.User" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from user
+        <trim prefix="where" prefixOverrides="and|or" >
+            <if test="name != null" >
+                 and name = #{name,jdbcType=VARCHAR}
+            </if>
+            <if test="phone != null" >
+                 and phone = #{phone,jdbcType=VARCHAR}
+            </if>
+            <if test="groupId != null" >
+                 and group_id = #{groupId,jdbcType=VARCHAR}
+            </if>
+            <if test="sort != null" >
+                 and sort = #{sort,jdbcType=VARCHAR}
+            </if>
+            <if test="createTime != null" >
+                 and create_time = #{createTime,jdbcType=BIGINT}
+            </if>
+            <if test="state != null" >
+                 and state = #{state,jdbcType=VARCHAR}
+            </if>
+            <if test="roleId != null" >
+                 and role_id = #{roleId,jdbcType=VARCHAR}
+            </if>
+        </trim>
+         order by sort asc, create_time desc
+    </select>
+
+    <select id="selectLogin"  parameterType="com.hesc.user.pojo.User" resultMap="BaseResultMap" >
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM  USER
+        <where>
+            name = #{name,jdbcType=VARCHAR} AND  phone = #{phone,jdbcType=VARCHAR}
+        </where>
+    </select>
+    <select id="selectPageList" parameterType="com.hesc.trundle.db.page.Page" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from user
+        <trim prefix="where" prefixOverrides="and|or" >
+            <if test="params.name != null" >
+                 and name = #{params.name,jdbcType=VARCHAR}
+            </if>
+            <if test="params.phone != null" >
+                 and phone = #{params.phone,jdbcType=VARCHAR}
+            </if>
+            <if test="params.groupId != null" >
+                 and group_id = #{params.groupId,jdbcType=VARCHAR}
+            </if>
+            <if test="params.sort != null" >
+                 and sort = #{params.sort,jdbcType=VARCHAR}
+            </if>
+            <if test="params.createTime != null" >
+                 and create_time = #{params.createTime,jdbcType=BIGINT}
+            </if>
+            <if test="params.state != null" >
+                 and state = #{params.state,jdbcType=VARCHAR}
+            </if>
+            <if test="params.roleId != null" >
+                 and role_id = #{params.roleId,jdbcType=VARCHAR}
+            </if>
+        </trim>
+         order by sort asc, create_time desc
+    </select>
+
+</mapper>
